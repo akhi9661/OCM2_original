@@ -1,24 +1,3 @@
-<'''
-
-This code module takes OCM2 HDF file as input and generates georeferenced reflectance, angle files, and cloud mask layer
-
-Input folder: path
-Input file: hdf_file
-
-Outputs:
-Final output folder: Georeferenced
-
-Two temporary output folders are also generated which are automatically deleted after the completion.
-GeoTiff: Contains geotiff files of each layer in HDF file
-Reflectance: Contains reflectance (of seven bands) and cloudmask layer. 
-
-'''
-
-path = r'D:\Aerosol Modelling\Aerosol\Output\OCM2\Test'
-hdf_file = 'O2_04NOV2021_009_011_GAN_L1B_ST_S.hdf'
-
-''' ------------------------------------------------------------------------------------------------------------------ '''
-
 def ExportSubdatasets(path, hdf_file):
     
     '''
@@ -264,4 +243,4 @@ if os.path.exists(opf_tif):
 if os.path.exists(opf_ref):
     shutil.rmtree(opf_ref)
     
-print('\nDone! Open Georeferenced folder for results')>
+print('\nDone! Open Georeferenced folder for results')
