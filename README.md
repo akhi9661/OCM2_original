@@ -1,4 +1,4 @@
-This code module takes OCM2 HDF file as input and generates georeferenced reflectance, angle files, and cloud mask layer
+This python code module takes OCM2 HDF file as input and generates georeferenced reflectance, angle files, and cloud mask layer
 
 Input folder: path
 Input file: hdf_file
