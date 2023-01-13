@@ -169,6 +169,10 @@ def toa_other(filelist):
     return (toa_diff, toa_ratio, shape, profile)
 
 def cloudmask_ocm(inpf, filelist):
+
+'''
+Cloud mask based on Mishra et. al., 2018 (https://doi.org/10.1007/s12524-017-0715-5)
+'''
     
     toa_sum = sum_toa(filelist)
     toa_diff, toa_ratio, shape, profile = toa_other(filelist) 
