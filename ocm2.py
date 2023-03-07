@@ -1,6 +1,6 @@
 import rasterio, os, re, shutil
-from pylab import*
-from osgeo import gdal
+import numpy as np
+from osgeo import gdal, osr, gdalconst
 
 def ExportSubdatasets(path, hdf_file):
     
