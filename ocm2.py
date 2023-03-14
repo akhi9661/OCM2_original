@@ -18,7 +18,7 @@ path = input('Enter the path to folder containing HDF file and metadata:\n')
 hdf_file = input('\nEnter the name of the HDF file with extension:\n')
 
 ''' ------------------------------------------------------------------------------------------------------------------ '''
-import rasterio, os, re, shutil
+import rasterio, os, re, shutil, math
 import numpy as np
 from osgeo import gdal, osr, gdalconst
 
