@@ -1,3 +1,23 @@
+'''
+
+This code module takes OCM2 HDF file as input and generates georeferenced reflectance, angle files, and cloud mask layer
+
+Input folder: path
+Input file: hdf_file
+
+Output:
+Final output folder: Georeferenced
+
+Two temporary output folders are also generated which are automatically deleted after the completion.
+GeoTiff: Contains geotiff files of each layer in HDF file
+Reflectance: Contains reflectance (of seven bands) and cloudmask layer. 
+
+'''
+
+path = input('Enter the path to folder containing HDF file and metadata:\n')
+hdf_file = input('\nEnter the name of the HDF file with extension:\n')
+
+''' ------------------------------------------------------------------------------------------------------------------ '''
 import rasterio, os, re, shutil
 import numpy as np
 from osgeo import gdal, osr, gdalconst
@@ -169,10 +189,6 @@ def toa_other(filelist):
     return (toa_diff, toa_ratio, shape, profile)
 
 def cloudmask_ocm(inpf, filelist):
-
-'''
-Cloud mask based on Mishra et. al., 2018 (https://doi.org/10.1007/s12524-017-0715-5)
-'''
     
     toa_sum = sum_toa(filelist)
     toa_diff, toa_ratio, shape, profile = toa_other(filelist) 
@@ -204,7 +220,7 @@ os.makedirs(opf_georef)
 def do_ref(opf_tif, meta, opf_ref):
     
     original = os.listdir(opf_tif)
-    gtif = list(filter(lambda x: x.endswith('TIF'), original))
+    gtif = list(filter(lambda x: x.endswith(("TIF", "tif", "img")), original))
     for band_name in gtif:
         if (int(''.join(list(filter(str.isdigit, band_name.split('.')[0].split('_')[0]))))) <= 7:
             toa_convert(opf_tif, band_name, opf_ref, meta[4])
@@ -216,7 +232,7 @@ def do_ref(opf_tif, meta, opf_ref):
 def do_georef(geo_ref, meta, opf_georef):
     
     original = os.listdir(opf_ref)
-    gtif = list(filter(lambda x: x.endswith('TIF'), original))
+    gtif = list(filter(lambda x: x.endswith(("TIF", "tif", "img")), original))
     for band_name in gtif:
         Georeference(opf_ref, band_name, meta, opf_georef)
         
@@ -227,7 +243,7 @@ def do_cldmsk(opf_ref):
     files = []
 
     original = os.listdir(opf_ref)
-    gtif = list(filter(lambda x: x.endswith('TIF'), original))
+    gtif = list(filter(lambda x: x.endswith(("TIF", "tif", "img")), original))
     for band_name in gtif:
         if (int(''.join(list(filter(str.isdigit, band_name.split('.')[0].split('_')[0]))))) <= 7:
             filelist = list_files(opf_ref, band_name, files)
@@ -244,11 +260,11 @@ print('Done: Cloudmasking. Wait.')
 do_georef(opf_ref, meta, opf_georef)
 print('Done: Georeferncing')
 
-print('\nRemoving temporary folders. Wait.')
 if os.path.exists(opf_tif):
     shutil.rmtree(opf_tif)
     
 if os.path.exists(opf_ref):
     shutil.rmtree(opf_ref)
-    
-print('\nDone! Open Georeferenced folder for results')
+
+print('Done: Temporary folders removed.')    
+print('Done: Open "Georeferenced" folder for result.')
