@@ -1,7 +1,4 @@
 rasterio
-os
 re
-shutil
 numpy
 gdal
-math
